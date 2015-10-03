@@ -1,0 +1,26 @@
+	// - - - - - Grid
+
+		// Variables
+			@gridMaxWith: 1440px;
+			@gridColumns: 12;
+			@gridGutter: 20px;
+
+		// Math
+			@gridSumGutters: @gridGutter * @gridColumns;
+			@gridWithUse: @gridMaxWith - @gridSumGutters;
+			@oneGrid: @gridWithUse / @gridColumns;
+			@oneGridPercentage: percentage(@oneGrid / @gridMaxWith);
+			@gridMargin: (@gridGutter / 2);
+
+		// Generate
+			.generate-grid(@gridColumns; @i: 1) when (@i =< @gridColumns) {
+				.grid@{i}{
+					width: (@i * @oneGridPercentage); float:left; margin-left: @gridMargin ; margin-right: @gridMargin;
+				}
+				.generate-grid(@gridColumns; (@i+1));
+			}
+			.generate-grid(@gridColumns);
+
+		// More Variables
+			.conteiner{width: @gridMaxWith; margin: 0px auto;}
+			.grid100{width: 100%;margin: 0px;}
