@@ -9,13 +9,12 @@
 			@gridSumGutters: @gridGutter * @gridColumns;
 			@gridWithUse: @gridMaxWith - @gridSumGutters;
 			@oneGrid: @gridWithUse / @gridColumns;
-			@oneGridPercentage: percentage(@oneGrid / @gridMaxWith);
 			@gridMargin: (@gridGutter / 2);
 
 		// Generate
 			.generate-grid(@gridColumns; @i: 1) when (@i =< @gridColumns) {
 				.grid@{i}{
-					width: (@i * @oneGridPercentage); float:left; margin-left: @gridMargin ; margin-right: @gridMargin;
+					width: percentage(((@i * @oneGrid) + (@gridGutter * (@i - 1)))/@gridMaxWith); float:left; margin-left: @gridMargin ; margin-right: @gridMargin;
 				}
 				.generate-grid(@gridColumns; (@i+1));
 			}
@@ -24,3 +23,4 @@
 		// More Variables
 			.conteiner{width: @gridMaxWith; margin: 0px auto;}
 			.grid100{width: 100%;margin: 0px;}
+			.row{.clear;width: @gridMaxWith;}
