@@ -1,12 +1,13 @@
 	// - - - - - Grid
 
 		// Variables
-			@gridMaxWith: 1440px;
-			@gridColumns: 12;
-			@gridGutter: 20px;
+			@gridMaxWith: 1440px; 		/* Grid max size */
+			@gridColumns: 12; 			/* Number of columns */
+			@gridGutter: 20px; 			/* Space between columns */
+			@gridExtraMargin: 20px; 	/* Extra margin in the begin and in the final of grid. (If you don't want just put '0px')*/
 
 		// Math
-			@gridSumGutters: @gridGutter * @gridColumns;
+			@gridSumGutters: (@gridGutter * @gridColumns) + (2 * @gridExtraMargin);
 			@gridWithUse: @gridMaxWith - @gridSumGutters;
 			@oneGrid: @gridWithUse / @gridColumns;
 			@gridMargin: (@gridGutter / 2);
@@ -14,13 +15,13 @@
 		// Generate
 			.generate-grid(@gridColumns; @i: 1) when (@i =< @gridColumns) {
 				.grid@{i}{
-					width: percentage(((@i * @oneGrid) + (@gridGutter * (@i - 1)))/@gridMaxWith); float:left; margin-left: @gridMargin ; margin-right: @gridMargin;
+					width: percentage(((@i * @oneGrid) + (@gridGutter * (@i - 1))) / (@gridMaxWith - @gridExtraMargin *2)); float:left; margin-left: @gridMargin ; margin-right: @gridMargin;
 				}
 				.generate-grid(@gridColumns; (@i+1));
 			}
 			.generate-grid(@gridColumns);
 
 		// More Variables
-			.conteiner{width: @gridMaxWith; margin: 0px auto;}
+			.container{width: @gridMaxWith; margin: 0px auto;position: relative;}
 			.grid100{width: 100%;margin: 0px;}
-			.row{.clear;width: @gridMaxWith;}
+			.row{.clear;width: 100%;position: relative;margin-top: 0px;margin-left: 0px;padding-right: @gridExtraMargin;padding-left: @gridExtraMargin;}
