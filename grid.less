@@ -5,17 +5,32 @@
 			@gridColumns: 12; 			/* Number of columns */
 			@gridGutter: 20px; 			/* Space between columns */
 			@gridExtraMargin: 20px; 	/* Extra margin in the begin and in the final of grid. (If you don't want just put '0px')*/
+			@gridFluid: true; 			/* For fluid grid select true, or false to fixed grid */
 
-		// Math
+		// Pre Math
 			@gridSumGutters: (@gridGutter * @gridColumns) + (2 * @gridExtraMargin);
 			@gridWithUse: @gridMaxWith - @gridSumGutters;
 			@oneGrid: @gridWithUse / @gridColumns;
 			@gridMargin: (@gridGutter / 2);
 
-		// Generate
+		// Generate Grid
 			.generate-grid(@gridColumns; @i: 1) when (@i =< @gridColumns) {
 				.grid@{i}{
-					width: percentage(((@i * @oneGrid) + (@gridGutter * (@i - 1))) / (@gridMaxWith - @gridExtraMargin *2)); float:left; margin-left: @gridMargin ; margin-right: @gridMargin;
+
+					// Grid Fixed
+						.calculate(@gridFluid) when (@gridFluid = false){
+							width: (@i * @oneGrid) + (@gridGutter * (@i - 1));
+						}
+
+					// Grid Fluid
+						.calculate(@gridFluid) when (@gridFluid = true){
+							width: percentage(((@i * @oneGrid) + (@gridGutter * (@i - 1))) / (@gridMaxWith - @gridExtraMargin *2));
+						}
+
+					.calculate(@gridFluid);
+					float:left;
+					margin-left: @gridMargin;
+					margin-right: @gridMargin;
 				}
 				.generate-grid(@gridColumns; (@i+1));
 			}
